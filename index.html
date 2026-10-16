@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Classement créateurs — octobre 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F7F4EE; --dark:#1E2B23; --pink:#E9B4C7;
+    --gold:#F2C94C; --green:#2D7A55;
+    --line:rgba(30,43,35,.10); --muted:#6B7A72;
+    --pad:22px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--cream);
+    font-family:'Archivo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    color:var(--dark);
+    padding:clamp(12px,3.5vw,32px) clamp(9px,3vw,16px) 40px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{max-width:960px;margin:0 auto}
+
+  .head{
+    background:var(--dark);color:var(--cream);text-align:center;
+    border-radius:clamp(16px,3vw,24px);
+    padding:clamp(20px,4.5vw,36px) clamp(16px,4vw,38px) clamp(18px,3.5vw,32px);
+    margin-bottom:16px;
+  }
+  .eyebrow{
+    font-size:clamp(9px,2.4vw,12px);font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:10px;
+  }
+  h1{font-size:clamp(25px,7vw,44px);font-weight:900;letter-spacing:-.02em;line-height:1.05}
+  h1 em{font-style:normal;color:var(--pink)}
+  .period{margin-top:8px;font-size:clamp(11.5px,3vw,15px);font-weight:500;color:rgba(247,244,238,.62)}
+  .totals{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:clamp(8px,3vw,40px);margin-top:18px;padding-top:16px;
+    border-top:1px solid rgba(247,244,238,.14);
+  }
+  .tot-n{font-size:clamp(15px,4.6vw,30px);font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tot-l{font-size:clamp(8px,2.2vw,11px);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(247,244,238,.55);margin-top:3px}
+
+  .colhead,.row{
+    display:grid;
+    grid-template-columns:40px 54px minmax(0,1fr) 72px 104px 180px;
+    column-gap:13px;align-items:center;
+  }
+  .row{grid-template-rows:auto auto;row-gap:0}
+  .colhead{
+    padding:0 var(--pad) 8px;
+    font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  }
+  .colhead span{text-align:right}
+  .row{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:11px var(--pad);margin-bottom:7px;
+  }
+  .row.top{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+  .row.top .sub,.row.top .brk,.row.top .lbl{color:rgba(247,244,238,.55)}
+  .row.top .num{color:var(--cream)}
+  .row.top .euro{color:var(--gold)}
+  .row.top .rank{color:var(--gold)}
+  .row.top .brk .p{color:var(--gold)}
+
+  .rank{grid-row:1/-1;align-self:center;justify-self:center;font-size:clamp(16px,4.2vw,21px);
+        font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.02em;color:var(--muted)}
+  .ava{
+    grid-row:1/-1;align-self:center;
+    position:relative;width:50px;height:50px;border-radius:50%;
+    background:var(--pink);color:var(--dark);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:16px;overflow:hidden;flex:none;
+  }
+  .ava img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+  .who{grid-row:1/-1;align-self:center;min-width:0}
+
+  .name{font-size:clamp(14.5px,3.6vw,17px);font-weight:800;letter-spacing:-.01em;line-height:1.2}
+  .sub{font-size:clamp(10.5px,2.7vw,12px);font-weight:500;color:var(--muted);margin-top:2px}
+  .badges{display:inline-flex;gap:4px;margin-left:6px;vertical-align:middle}
+  .b{font-size:9px;font-weight:800;letter-spacing:.04em;background:var(--gold);color:var(--dark);padding:2px 5px;border-radius:5px}
+  .b.bc{background:var(--pink);color:var(--dark)}
+
+  .cell{grid-row:1;align-self:end;display:flex;flex-direction:column;align-items:flex-end;text-align:right;min-width:0}
+  .lbl{display:none}
+  .num{font-size:15.5px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em;white-space:nowrap}
+  .views{font-size:18px;font-weight:900}
+  .euro{font-size:20px;font-weight:900;color:var(--green);font-variant-numeric:tabular-nums;
+        letter-spacing:-.02em;line-height:1.1;white-space:nowrap}
+  .brk{
+    grid-column:6;grid-row:2;justify-self:end;align-self:start;text-align:right;
+    font-size:10.5px;font-weight:600;color:var(--muted);
+    margin-top:3px;font-variant-numeric:tabular-nums;line-height:1.3;white-space:nowrap;
+  }
+  .brk .n{white-space:nowrap}
+  .brk .p{color:#B8860B;font-weight:800}
+
+  .split{
+    display:flex;align-items:center;gap:12px;margin:22px 4px 12px;
+    font-size:clamp(9.5px,2.5vw,11px);font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .split::before,.split::after{content:"";flex:1;height:1px;background:var(--line)}
+  .row.waiting{background:transparent;border-style:dashed;border-color:rgba(30,43,35,.22)}
+  .row.waiting .rank{color:rgba(30,43,35,.25)}
+  .row.waiting .ava{background:rgba(30,43,35,.08);color:rgba(30,43,35,.35)}
+  .row.waiting .name{color:rgba(30,43,35,.55)}
+  .row.waiting .euro{color:rgba(30,43,35,.35)}
+
+  .note{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:clamp(16px,3.5vw,24px) clamp(16px,4vw,30px);margin-top:18px;
+    font-size:clamp(12px,3vw,13.5px);line-height:1.6;color:var(--muted);text-align:center;
+  }
+  .note b{color:var(--dark);font-weight:700}
+  .note p+p{margin-top:8px}
+
+  @media(max-width:860px){
+    :root{--pad:15px}
+    .colhead,.row{grid-template-columns:34px 46px minmax(0,1fr) 58px 88px 152px;column-gap:10px}
+    .ava{width:44px;height:44px;font-size:14px}
+  }
+
+  @media(max-width:640px){
+    :root{--pad:14px}
+    .colhead{display:none}
+    .row{
+      grid-template-columns:26px 42px minmax(0,1fr) minmax(0,1fr);
+      row-gap:9px;column-gap:10px;
+      padding:10px var(--pad);margin-bottom:6px;border-radius:13px;
+    }
+    .rank{grid-row:1;align-self:center}
+    .ava{grid-row:1;align-self:center;width:42px;height:42px;font-size:13px}
+    .who{grid-row:1;grid-column:3/-1;align-self:center}
+    .cell{
+      grid-row:2;flex-direction:row;align-items:baseline;justify-content:center;
+      gap:6px;text-align:center;padding:0 2px;
+    }
+    .c-vid{grid-column:1/3}
+    .c-vue{grid-column:3/4;border-left:1px solid var(--line)}
+    .c-eur{grid-column:4/-1}
+    .row.top .c-vue{border-color:rgba(247,244,238,.16)}
+    .lbl{
+      display:block;font-size:8.5px;font-weight:700;letter-spacing:.08em;
+      text-transform:uppercase;color:var(--muted);margin:0;
+    }
+    .num,.views{font-size:15px}
+    .euro{font-size:16px}
+    .brk{
+      grid-column:1/-1;grid-row:3;justify-self:center;text-align:center;
+      font-size:10px;margin-top:-3px;padding-top:7px;
+      border-top:1px solid var(--line);width:100%;white-space:normal;
+    }
+    .row.top .brk{border-color:rgba(247,244,238,.13)}
+    .row.waiting .brk{border-color:rgba(30,43,35,.09)}
+  }
+
+  @media(max-width:380px){
+    .row{grid-template-columns:22px 38px minmax(0,1fr) minmax(0,1fr);column-gap:8px;padding:9px 11px}
+    .ava{width:38px;height:38px;font-size:12px}
+    .name{font-size:13.5px}
+    .sub{font-size:10px}
+    .num,.views{font-size:13.5px}
+    .euro{font-size:15px}
+    .brk{font-size:9.5px}
+    .lbl{font-size:8px}
+  }
+
+  @media print{ body{padding:0} .row{break-inside:avoid} }
+  @media(prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+
+  /* ---- jauge de série ---- */
+  .goal{grid-column:1/-1;margin-top:10px;min-width:0;overflow:hidden}
+  .dots{display:flex;gap:4px;flex-wrap:nowrap;justify-content:space-between;padding:0 1px}
+  .dots i{flex:1 1 0;min-width:3px;max-width:9px;aspect-ratio:1;border-radius:50%;
+          background:#ddd8cf;display:block}
+  .dots i.on{background:#d98aa5}
+  .row.top .dots i{background:rgba(255,255,255,.2)}
+  .row.top .dots i.on{background:#E9A8BE}
+  /* dates : collées aux bords du bloc, jamais en débordement */
+  .dlbl{display:flex;justify-content:space-between;align-items:flex-start;
+        margin-top:4px;font-size:11px;color:#6f736e;font-weight:600;gap:8px}
+  .dlbl span{white-space:nowrap;min-width:0}
+  .dlbl .dg{text-align:left}
+  .dlbl .dd{text-align:right}
+  .dlbl b{color:#1E2A26;font-weight:800}
+  .row.top .dlbl{color:rgba(255,255,255,.6)}
+  .row.top .dlbl b{color:#F5C542}
+  /* ---- badge série ---- */
+  .b.bf{background:#fdece8;color:#b4442e;border-color:#f6d2c9}
+  .row.top .b.bf{background:rgba(255,255,255,.14);color:#ffd9cd;border-color:transparent}
+  /* ---- colonnes centrées ---- */
+  .cell{align-self:center;align-items:center;text-align:center;justify-content:center}
+  .colhead span{text-align:center}
+  @media(min-width:641px){
+    .lbl{font-size:11.5px;letter-spacing:.06em}
+    .brk .n{font-size:12.5px}
+  }
+  @media(max-width:640px){
+    .goal{grid-column:1/-1;margin-top:10px}
+    .dots{gap:2px}
+    .dots i{max-width:7px}
+    .dlbl{font-size:10.5px;gap:6px}
+    .b.bf{font-size:10px}
+  }
+  @media(max-width:380px){
+    .dots{gap:1.5px}
+    .dots i{max-width:6px}
+    .dlbl{font-size:9.5px}
+  }
+
+  /* ---- correctifs responsive : le détail des gains a sa propre ligne, les badges passent à la ligne ---- */
+  .ava .ph{position:absolute;inset:0;border-radius:50%;background-size:cover;background-position:center}
+  .who{grid-row:1}
+  .badges{flex-wrap:wrap;row-gap:3px}
+  .b{white-space:nowrap}
+  .brk{grid-column:3/-1;grid-row:2;white-space:normal;margin-top:6px}
+  .brk .n{white-space:nowrap}
+  @media(min-width:641px) and (max-width:1000px){
+    .colhead,.row{grid-template-columns:30px 44px minmax(0,1fr) 56px 92px 96px;column-gap:10px}
+    .ava{width:42px;height:42px;font-size:13px}
+    .views{font-size:16px} .euro{font-size:18px}
+    .name .badges{display:flex;margin:4px 0 0}
+  }
+  @media(max-width:640px){
+    .who{grid-row:1;grid-column:3/-1}
+    .brk{grid-column:1/-1;grid-row:3}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="head">
+    <div class="eyebrow">Programme créateurs · MeilleursJobs</div>
+    <h1>Le classement<br><em>du mois d'octobre</em></h1>
+    <div class="period">Du 1<sup>er</sup> au 15 octobre · relevé du 16/10</div>
+    <div class="totals">
+      <div><div class="tot-n">2 163 271</div><div class="tot-l">vues générées</div></div>
+      <div><div class="tot-n">1 510</div><div class="tot-l">vidéos publiées</div></div>
+      <div><div class="tot-n">7 202 €</div><div class="tot-l">redistribués</div></div>
+    </div>
+  </div>
+  <div class="colhead">
+    <div></div><div></div><div style="text-align:left">Créateur</div>
+    <span>Vidéos</span><span>Vues</span><span>Gains</span>
+  </div>
+  <div class="row top">
+    <div class="rank">1</div>
+    <div class="ava">C<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202609/6927124-file-6745791161375077410.jpeg)"></span></div>
+    <div class="who"><div class="name">Charlotte<span class="badges"><span class="b bf">🔥 Série de 32 jours</span><span class="b">100K · +150&nbsp;€</span></span></div><div class="sub">30 Insta · 29 TikTok · 30 Facebook · 24 essais</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">89</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">502 667</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">1 002 €</span></div>
+    <div class="brk"><span class="n">247,22 € vidéos</span> + <span class="n">502,67 € vues</span> + <span class="n">2,03 € reels d'essai</span> + <span class="n p">150,00 € palier</span> + <span class="n p">100,00 € régularité</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">14/09</span><span class="dd">12/11 <b>+250&nbsp;€</b></span></div></div>  </div>
+  <div class="row top">
+    <div class="rank">2</div>
+    <div class="ava">L<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202608/6784725-file-1970605446498265086.jpeg)"></span></div>
+    <div class="who"><div class="name">Lanto<span class="badges"><span class="b bf">🔥 Série de 5 jours</span></span></div><div class="sub">20 Insta · 20 TikTok · 30 Facebook · 23 essais</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">70</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">320 220</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">714 €</span></div>
+    <div class="brk"><span class="n">194,44 € vidéos</span> + <span class="n">320,22 € vues</span> + <span class="n">4,06 € reels d'essai</span> + <span class="n">195,22 € spark</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">11/10</span><span class="dd">09/11 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row top">
+    <div class="rank">3</div>
+    <div class="ava">G<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202608/6648602-file-8294455879811003860.jpeg)"></span></div>
+    <div class="who"><div class="name">Gina<span class="badges"><span class="b bf">🔥 Série de 13 jours</span></span></div><div class="sub">29 Insta · 29 TikTok · 29 Facebook · 21 essais</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">87</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">257 768</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">632 €</span></div>
+    <div class="brk"><span class="n">241,67 € vidéos</span> + <span class="n">257,77 € vues</span> + <span class="n">3,24 € reels d'essai</span> + <span class="n">128,83 € spark</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">03/10</span><span class="dd">01/11 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">4</div>
+    <div class="ava">J<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202609/7045218-file-12549096488021882369.jpeg)"></span></div>
+    <div class="who"><div class="name">Jade<span class="badges"><span class="b bf">🔥 Série de 17 jours</span></span></div><div class="sub">36 Insta · 37 TikTok · 38 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">111</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">144 002</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">452 €</span></div>
+    <div class="brk"><span class="n">308,33 € vidéos</span> + <span class="n">144,00 € vues</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">29/09</span><span class="dd">28/10 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">5</div>
+    <div class="ava">A<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202608/6784716-file-13597367174208091159.jpeg)"></span></div>
+    <div class="who"><div class="name">Anne<span class="badges"><span class="b bf">🔥 Série de 35 jours</span></span></div><div class="sub">30 Insta · 30 TikTok · 30 Facebook · 26 essais</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">90</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">44 800</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">397 €</span></div>
+    <div class="brk"><span class="n">250,00 € vidéos</span> + <span class="n">44,80 € vues</span> + <span class="n">2,27 € reels d'essai</span> + <span class="n p">100,00 € régularité</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">11/09</span><span class="dd">09/11 <b>+250&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">6</div>
+    <div class="ava">J<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202608/6674053-file-8591893111082908329.jpeg)"></span></div>
+    <div class="who"><div class="name">Julie<span class="badges"></span></div><div class="sub">22 Insta · 22 TikTok · 21 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">65</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">198 236</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">388 €</span></div>
+    <div class="brk"><span class="n">180,56 € vidéos</span> + <span class="n">198,24 € vues</span> + <span class="n">9,01 € spark</span></div>
+  </div>
+  <div class="row">
+    <div class="rank">7</div>
+    <div class="ava">AL<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202608/6648606-file-346333985130613906.jpeg)"></span></div>
+    <div class="who"><div class="name">Anaïs LV<span class="badges"><span class="b bf">🔥 Série de 14 jours</span></span></div><div class="sub">31 Insta · 30 TikTok · 30 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">91</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">46 141</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">372 €</span></div>
+    <div class="brk"><span class="n">252,78 € vidéos</span> + <span class="n">46,14 € vues</span> + <span class="n">72,70 € spark</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">02/10</span><span class="dd">31/10 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">8</div>
+    <div class="ava">E<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202608/6784720-file-9270988581451792123.jpeg)"></span></div>
+    <div class="who"><div class="name">Elisa<span class="badges"><span class="b bf">🔥 Série de 22 jours</span></span></div><div class="sub">34 Insta · 33 TikTok · 33 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">100</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">57 517</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">335 €</span></div>
+    <div class="brk"><span class="n">277,78 € vidéos</span> + <span class="n">57,52 € vues</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">24/09</span><span class="dd">23/10 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">9</div>
+    <div class="ava">C<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202610/7067474-file-7916018653212027468.jpeg)"></span></div>
+    <div class="who"><div class="name">Camille<span class="badges"><span class="b">25K · +30&nbsp;€</span></span></div><div class="sub">28 Insta · 29 TikTok · 0 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">57</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">142 898</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">331 €</span></div>
+    <div class="brk"><span class="n">158,33 € vidéos</span> + <span class="n">142,90 € vues</span> + <span class="n p">30,00 € palier</span></div>
+  </div>
+  <div class="row">
+    <div class="rank">10</div>
+    <div class="ava">M<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202609/7072804-file-6979803115867789773.jpeg)"></span></div>
+    <div class="who"><div class="name">Mathou<span class="badges"><span class="b bf">🔥 Série de 16 jours</span></span></div><div class="sub">30 Insta · 30 TikTok · 30 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">90</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">62 836</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">313 €</span></div>
+    <div class="brk"><span class="n">250,00 € vidéos</span> + <span class="n">62,84 € vues</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">30/09</span><span class="dd">29/10 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">11</div>
+    <div class="ava">P<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202608/6648607-file-5802771879325175203.jpeg)"></span></div>
+    <div class="who"><div class="name">Pauline<span class="badges"><span class="b bf">🔥 Série de 2 jours</span></span></div><div class="sub">30 Insta · 30 TikTok · 29 Facebook · 64 essais</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">89</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">51 409</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">303 €</span></div>
+    <div class="brk"><span class="n">247,22 € vidéos</span> + <span class="n">51,41 € vues</span> + <span class="n">4,55 € reels d'essai</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">14/10</span><span class="dd">12/11 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">12</div>
+    <div class="ava">E<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202609/7020419-file-6898189713114733307.jpeg)"></span></div>
+    <div class="who"><div class="name">Edène<span class="badges"><span class="b bf">🔥 Série de 14 jours</span></span></div><div class="sub">28 Insta · 28 TikTok · 28 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">84</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">63 142</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">296 €</span></div>
+    <div class="brk"><span class="n">233,33 € vidéos</span> + <span class="n">63,14 € vues</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">02/10</span><span class="dd">31/10 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">13</div>
+    <div class="ava">A<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202608/6667063-file-607581511645788366.jpeg)"></span></div>
+    <div class="who"><div class="name">Antoine<span class="badges"></span></div><div class="sub">27 Insta · 26 TikTok · 27 Facebook · 34 essais</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">80</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">34 884</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">293 €</span></div>
+    <div class="brk"><span class="n">222,22 € vidéos</span> + <span class="n">34,88 € vues</span> + <span class="n">4,74 € reels d'essai</span> + <span class="n">31,01 € spark</span></div>
+  </div>
+  <div class="row">
+    <div class="rank">14</div>
+    <div class="ava">C<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202609/6784728-file-18299774155576033803.jpeg)"></span></div>
+    <div class="who"><div class="name">Chloé<span class="badges"><span class="b bf">🔥 Série de 3 jours</span></span></div><div class="sub">28 Insta · 30 TikTok · 28 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">86</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">47 539</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">286 €</span></div>
+    <div class="brk"><span class="n">238,89 € vidéos</span> + <span class="n">47,54 € vues</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">13/10</span><span class="dd">11/11 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">15</div>
+    <div class="ava">M<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202610/7041912-file-211132296139422705.jpg)"></span></div>
+    <div class="who"><div class="name">Madleen<span class="badges"><span class="b bf">🔥 Série de 15 jours</span></span></div><div class="sub">30 Insta · 30 TikTok · 30 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">90</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">25 153</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">275 €</span></div>
+    <div class="brk"><span class="n">250,00 € vidéos</span> + <span class="n">25,15 € vues</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">01/10</span><span class="dd">30/10 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">16</div>
+    <div class="ava">K<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202609/7054572-file-5457360707027567991.jpeg)"></span></div>
+    <div class="who"><div class="name">Kelly<span class="badges"></span></div><div class="sub">31 Insta · 32 TikTok · 0 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">63</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">72 274</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">247 €</span></div>
+    <div class="brk"><span class="n">175,00 € vidéos</span> + <span class="n">72,27 € vues</span></div>
+  </div>
+  <div class="row">
+    <div class="rank">17</div>
+    <div class="ava">H<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202609/6784722-file-12626351855263850453.jpeg)"></span></div>
+    <div class="who"><div class="name">Hélène<span class="badges"></span></div><div class="sub">12 Insta · 12 TikTok · 12 Facebook · 24 essais</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">36</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">23 562</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">130 €</span></div>
+    <div class="brk"><span class="n">100,00 € vidéos</span> + <span class="n">23,56 € vues</span> + <span class="n">1,84 € reels d'essai</span> + <span class="n">4,34 € spark</span></div>
+  </div>
+  <div class="row">
+    <div class="rank">18</div>
+    <div class="ava">O<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202610/7326547-file-15310029799601436990.jpg)"></span></div>
+    <div class="who"><div class="name">Ophélie<span class="badges"><span class="b bf">🔥 Série de 6 jours</span></span></div><div class="sub">12 Insta · 12 TikTok · 14 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">38</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">12 713</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">118 €</span></div>
+    <div class="brk"><span class="n">105,56 € vidéos</span> + <span class="n">12,71 € vues</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">10/10</span><span class="dd">08/11 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">19</div>
+    <div class="ava">L<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202610/7331367-file-11973813569100792334.jpg)"></span></div>
+    <div class="who"><div class="name">Loraine<span class="badges"><span class="b bf">🔥 Série de 6 jours</span></span></div><div class="sub">12 Insta · 12 TikTok · 12 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">36</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">9 998</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">110 €</span></div>
+    <div class="brk"><span class="n">100,00 € vidéos</span> + <span class="n">10,00 € vues</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">10/10</span><span class="dd">08/11 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">20</div>
+    <div class="ava">S<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202610/7395768-file-13551085818463362229.jpg)"></span></div>
+    <div class="who"><div class="name">Solène<span class="badges"><span class="b bf">🔥 Série de 2 jours</span></span></div><div class="sub">8 Insta · 8 TikTok · 8 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">24</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">16 928</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">84 €</span></div>
+    <div class="brk"><span class="n">66,67 € vidéos</span> + <span class="n">16,93 € vues</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">14/10</span><span class="dd">12/11 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">21</div>
+    <div class="ava">C<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202610/7403554-file-6086160979396490775.jpeg)"></span></div>
+    <div class="who"><div class="name">Cédric<span class="badges"><span class="b bf">🔥 Série de 2 jours</span></span></div><div class="sub">4 Insta · 6 TikTok · 4 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">14</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">24 881</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">64 €</span></div>
+    <div class="brk"><span class="n">38,89 € vidéos</span> + <span class="n">24,88 € vues</span></div>
+<div class="goal"><div class="dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlbl"><span class="dg">14/10</span><span class="dd">12/11 <b>+100&nbsp;€</b></span></div></div>  </div>
+  <div class="row">
+    <div class="rank">22</div>
+    <div class="ava">J<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202610/7379285-file-4826738310815956443.jpg)"></span></div>
+    <div class="who"><div class="name">Jeremy<span class="badges"></span></div><div class="sub">7 Insta · 8 TikTok · 5 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">20</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">3 703</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">59 €</span></div>
+    <div class="brk"><span class="n">55,56 € vidéos</span> + <span class="n">3,70 € vues</span></div>
+  </div>
+  <div class="split">Aucune vidéo remontée</div>
+  <div class="row waiting">
+    <div class="rank">23</div>
+    <div class="ava">A<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202610/7401881-file-2906511188555677988.jpg)"></span></div>
+    <div class="who"><div class="name">Adèle<span class="badges"></span></div><div class="sub">0 Insta · 0 TikTok · 0 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">0</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">0</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">0 €</span></div>
+    <div class="brk"><span class="n">0,00 € vidéos</span> + <span class="n">0,00 € vues</span></div>
+  </div>
+  <div class="row waiting">
+    <div class="rank">24</div>
+    <div class="ava">A<span class="ph" style="background-image:url(https://static.metricool.com/brand-logo/202610/7422084-file-2447534360734421858.jpg)"></span></div>
+    <div class="who"><div class="name">Arthur<span class="badges"></span></div><div class="sub">0 Insta · 0 TikTok · 0 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">0</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">0</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">0 €</span></div>
+    <div class="brk"><span class="n">0,00 € vidéos</span> + <span class="n">0,00 € vues</span></div>
+  </div>
+  <div class="row waiting">
+    <div class="rank">25</div>
+    <div class="ava">F</div>
+    <div class="who"><div class="name">Faustin<span class="badges"></span></div><div class="sub">0 Insta · 0 TikTok · 0 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">0</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">0</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">0 €</span></div>
+    <div class="brk"><span class="n">0,00 € vidéos</span> + <span class="n">0,00 € vues</span></div>
+  </div>
+  <div class="row waiting">
+    <div class="rank">26</div>
+    <div class="ava">L</div>
+    <div class="who"><div class="name">Lorène<span class="badges"></span></div><div class="sub">0 Insta · 0 TikTok · 0 Facebook</div></div>
+    <div class="cell c-vid"><span class="lbl">Vidéos</span><span class="num">0</span></div>
+    <div class="cell c-vue"><span class="lbl">Vues</span><span class="num views">0</span></div>
+    <div class="cell c-eur"><span class="lbl">Gains</span><span class="euro">0 €</span></div>
+    <div class="brk"><span class="n">0,00 € vidéos</span> + <span class="n">0,00 € vues</span></div>
+  </div>
+  <div class="note">
+    <p><b>Comment se lisent les gains.</b> Le fixe au prorata des vidéos publiées (500 € pour 180 vidéos, soit 2,78 € par vidéo, plafonné à 500 €) + le bonus vues (1 € pour 1 000 vues Instagram et TikTok, jusqu'à 250 000 vues par vidéo) + les reels d'essai (0,50 € pour 1 000 vues) + la prime Spark Ads (0,25 € pour 1 000 impressions) + les primes débloquées.</p>
+    <p><b>Les vidéos comptées</b> sont vos reels Instagram, vos vidéos TikTok et vos reels Facebook. Les stories ne sont pas comptées. Les vues Facebook n'entrent pas dans le bonus vues, mais les reels Facebook comptent bien comme des vidéos.</p>
+    <p><b>Les reels d'essai</b> ne sont pas comptés dans le fixe. Ils sont rémunérés uniquement sur leurs vues, à 0,50 € pour 1 000 vues, et ne donnent pas droit aux primes de palier.</p>
+    <p><b>Les paliers en doré</b> : 25K = +30 €, 50K = +75 €, 100K = +150 €, 250K = +400 €, débloqués <b>une seule fois par créateur</b> sur toute la durée du programme.</p>
+    <p><b>La prime de régularité.</b> Chaque point est un jour. Il se colore quand vos 6 vidéos du jour sont publiées, 2 sur Instagram, 2 sur TikTok et 2 sur Facebook. Les stories et les reels d'essai ne comptent pas. 30 jours d'affilée = +100 €, 60 jours = +250 €, 90 jours = +500 €. Un jour manqué remet le compteur à zéro.</p>
+    <p><b>Paiement le 7 du mois suivant</b>, sur le relevé final. Les chiffres en cours de mois sont provisoires : les vues continuent de monter.</p>
+  </div>
+</div>
+</body>
+</html>
